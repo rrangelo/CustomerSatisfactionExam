@@ -13,7 +13,10 @@ Clone the repository to your local file system, go into the project location and
 And now go to Documentation section to see the API Docs on the web. 
 
 ## Instalation
-TODO: Docker installation
+
+To install on Docker
+
+`$ docker build -t springio/customersatisfaction .`
 
 ## Documentation
 First that all, you need build and run the project.
