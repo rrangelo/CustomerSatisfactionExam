@@ -1,8 +1,24 @@
 # Getting Started
-
 This is an exam for apply to PageConsulting as Senior Backend Developer.
 
-Docs: http://localhost:8080/swagger-ui
+## Build, Packaging and Running
+Clone the repository to your local file system, go into the project location and execute the sentence below.
+
+### On Unix:
+`./mvnw package && java -jar target/customersatisfaction-0.0.1-SNAPSHOT.jar`
+
+### On Windows:
+`mvnw package && java -jar target/customersatisfaction-0.0.1-SNAPSHOT.jar`
+
+And now go to Documentation section to see the API Docs on the web. 
+
+## Instalation
+TODO: Docker installation
+
+## Documentation
+First that all, you need build and run the project.
+
+Go to [http://localhost:8080/swagger-ui](http://localhost:8080/swagger-ui) to see the technical documentation.
 
 ### Reference Documentation
 For further reference, please consider the following sections:
