@@ -16,7 +16,14 @@ And now go to Documentation section to see the API Docs on the web.
 
 To install on Docker
 
-`$ docker build -t springio/customersatisfaction .`
+### On Unix
+`./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=rrangelo/customersatisfaction`
+
+### On Windows
+`mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=rrangelo/customersatisfaction`
+
+After you need execute this command:
+`docker run -p 8080:8080 -t rrangelo/customersatisfaction`
 
 ## Documentation
 First that all, you need build and run the project.
