@@ -37,17 +37,11 @@
  *
  * Contributor(s):
  */
-package rrangelo.customersatisfaction.documents;
+package rrangelo.customersatisfaction.beans.responses;
 
-import java.time.LocalDate;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  *
@@ -56,19 +50,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Builder
-@Document(collection = "satisfactions")
-public class SatisfactionDocument {
+public class ErrorResponseBean {
     
-    @Id
-    private String id;
-    
-    @Indexed
-    private long code;
-    private int qualification;
-    private LocalDate date;
-        
-    @DBRef
-    private CustomerDocument customer;
+    private String message;
     
 }

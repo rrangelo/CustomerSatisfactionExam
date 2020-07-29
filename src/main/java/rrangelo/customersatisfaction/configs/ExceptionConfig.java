@@ -37,38 +37,39 @@
  *
  * Contributor(s):
  */
-package rrangelo.customersatisfaction.documents;
+package rrangelo.customersatisfaction.configs;
 
-import java.time.LocalDate;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import rrangelo.customersatisfaction.beans.responses.ErrorResponseBean;
+import rrangelo.customersatisfaction.exceptions.responses.CustomerResponseException;
+import rrangelo.customersatisfaction.exceptions.responses.SatisfactionResponseException;
 
 /**
  *
  * @author Ramon Rangel Osorio <ramon.rangel@protonmail.com>
  */
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
-@Builder
-@Document(collection = "satisfactions")
-public class SatisfactionDocument {
+@ControllerAdvice
+public class ExceptionConfig extends ResponseEntityExceptionHandler {
     
-    @Id
-    private String id;
+    @ExceptionHandler(CustomerResponseException.class)
+    public final ResponseEntity<ErrorResponseBean> customerException(
+            CustomerResponseException exception,
+            WebRequest request
+    ) {
+        return new ResponseEntity<>(new ErrorResponseBean(exception.getMessage()), HttpStatus.BAD_REQUEST);
+    }
     
-    @Indexed
-    private long code;
-    private int qualification;
-    private LocalDate date;
-        
-    @DBRef
-    private CustomerDocument customer;
+    @ExceptionHandler(SatisfactionResponseException.class)
+    public final ResponseEntity<ErrorResponseBean> satisfactionException(
+            SatisfactionResponseException exception,
+            WebRequest request
+    ) {
+        return new ResponseEntity<>(new ErrorResponseBean(exception.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
+    }
     
 }

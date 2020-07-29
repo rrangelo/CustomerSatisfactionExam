@@ -51,6 +51,7 @@ import rrangelo.customersatisfaction.beans.requests.customers.CustomerCreateCust
 import rrangelo.customersatisfaction.beans.requests.customers.CustomerFindCustomerRequestBean;
 import rrangelo.customersatisfaction.beans.requests.customers.CustomerUpdateCustomerRequestBean;
 import rrangelo.customersatisfaction.beans.responses.customers.CustomerFindCustomerResponseBean;
+import rrangelo.customersatisfaction.exceptions.responses.CustomerResponseException;
 import rrangelo.customersatisfaction.services.CustomerService;
 
 /**
@@ -60,26 +61,38 @@ import rrangelo.customersatisfaction.services.CustomerService;
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
-    
+
     @Autowired
     private CustomerService service;
-    
+
     @PostMapping
     public void create(@RequestBody CustomerCreateCustomerRequestBean customer) {
-        service.create(customer);
+        try {
+            service.create(customer);
+        } catch (Exception e) {
+            throw new CustomerResponseException(e.getMessage());
+        }
     }
-    
+
     @GetMapping
     public CustomerFindCustomerResponseBean find(@RequestParam(value = "email") String email) {
-        return service.find(CustomerFindCustomerRequestBean.builder()
-                        .email(email)
-                        .build()
-        );
+        try {
+            return service.find(CustomerFindCustomerRequestBean.builder()
+                    .email(email)
+                    .build()
+            );
+        } catch (Exception e) {
+            throw new CustomerResponseException(e.getMessage());
+        }
     }
-    
+
     @PutMapping
     public void update(@RequestBody CustomerUpdateCustomerRequestBean customer) {
-        service.update(customer);
+        try {
+            service.update(customer);
+        } catch (Exception e) {
+            throw new CustomerResponseException(e.getMessage());
+        }
     }
-    
+
 }

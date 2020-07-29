@@ -57,7 +57,7 @@ public class MongoConfig {
 
     @Bean
     public MongoClient mongo() {
-        return MongoClients.create("mongodb://localhost:27017");
+        return MongoClients.create("mongodb+srv://exam:Exam7532@exams.4xyrd.mongodb.net/customer_satisfaction");
     }
 
     @Bean

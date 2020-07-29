@@ -40,6 +40,7 @@
 package rrangelo.customersatisfaction.services;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -54,6 +55,7 @@ import rrangelo.customersatisfaction.beans.responses.customers.CustomerFindCusto
 import rrangelo.customersatisfaction.beans.responses.customers.SatisfactionFindCustomerResponseBean;
 import rrangelo.customersatisfaction.documents.CustomerDocument;
 import rrangelo.customersatisfaction.documents.SatisfactionDocument;
+import rrangelo.customersatisfaction.exceptions.validations.CustomerValidationException;
 import rrangelo.customersatisfaction.repositories.CustomerRepository;
 import rrangelo.customersatisfaction.repositories.SatisfactionRepository;
 
@@ -78,7 +80,7 @@ public class CustomerService {
     public void create(CustomerCreateCustomerRequestBean request) {
         if (repository.existsByEmail(request.getEmail())) {
             log.error("{CustomerService::create} email: " + request.getEmail());
-            throw new RuntimeException("Customer exists");
+            throw new CustomerValidationException("Customer exists");
         }
         final CustomerDocument customer = repository.save(
                 CustomerDocument.builder()
@@ -106,7 +108,7 @@ public class CustomerService {
         Optional<CustomerDocument> customer = null;
         if (!repository.existsByEmail(request.getEmail())) {
             log.error("{CustomerService::find} email: " + request.getEmail());
-            throw new RuntimeException("Customer doesn't exists");
+            throw new CustomerValidationException("Customer doesn't exists");
         }
         customer = repository.findByEmail(request.getEmail());
         return CustomerFindCustomerResponseBean.builder()
@@ -118,7 +120,7 @@ public class CustomerService {
                                 .map(satisfaction -> {
                                     return SatisfactionFindCustomerResponseBean.builder()
                                             .qualification(satisfaction.getQualification())
-                                            .date(satisfaction.getDate())
+                                            .date(satisfaction.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE))
                                             .code(satisfaction.getCode())
                                             .build();
                                 }).collect(Collectors.toList())
@@ -131,8 +133,9 @@ public class CustomerService {
         Optional<CustomerDocument> customer = null;
         if (!repository.existsByEmail(request.getEmail())) {
             log.error("{CustomerService::update} email: " + request.getEmail());
-            throw new RuntimeException("Customer doesn't exists");
+            throw new CustomerValidationException("Customer doesn't exists");
         }
+        log.info("{CustomerService::update} email: " + request.getEmail());
         customer = repository.findByEmail(request.getEmail());
         customer.get().setEmail(request.getEmail());
         customer.get().setNames(request.getNames());

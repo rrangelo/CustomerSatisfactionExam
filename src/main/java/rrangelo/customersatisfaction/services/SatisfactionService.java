@@ -40,6 +40,7 @@
 package rrangelo.customersatisfaction.services;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -53,6 +54,7 @@ import rrangelo.customersatisfaction.beans.responses.satisfactions.CustomerFindS
 import rrangelo.customersatisfaction.beans.responses.satisfactions.SatisfactionFindSatisfactionResponseBean;
 import rrangelo.customersatisfaction.documents.CustomerDocument;
 import rrangelo.customersatisfaction.documents.SatisfactionDocument;
+import rrangelo.customersatisfaction.exceptions.validations.SatisfactionValidationException;
 import rrangelo.customersatisfaction.repositories.CustomerRepository;
 import rrangelo.customersatisfaction.repositories.SatisfactionRepository;
 
@@ -79,7 +81,7 @@ public class SatisfactionService {
         Optional<CustomerDocument> customer = null;
         if (!customerRepository.existsByEmail(request.getCustomer().getEmail())) {
             log.error("{SatisfactionService::create} email: " + request.getCustomer().getEmail());
-            throw new RuntimeException("Customer doesn't exists");
+            throw new SatisfactionValidationException("Customer doesn't exists");
         }
         customer = customerRepository.findByEmail(request.getCustomer().getEmail());
         satisfaction = repository.save(
@@ -92,7 +94,7 @@ public class SatisfactionService {
         );
         if (!repository.existsByCode(satisfaction.getCode())) {
             log.error("{SatisfactionService::create} code: " + satisfaction.getCode());
-            throw new RuntimeException("Satisfaction can't be created");
+            throw new SatisfactionValidationException("Satisfaction can't be created");
         }
     }
 
@@ -103,7 +105,7 @@ public class SatisfactionService {
                 || request.getStartDate().isEqual(request.getEndDate())
         ) {
             log.error("{SatisfactionService::find} startDate: " + request.getStartDate() + " - endDate: " + request.getEndDate());
-            throw new RuntimeException("Dates aren't a period");
+            throw new SatisfactionValidationException("Dates aren't a period");
         }
         satisfactions = repository.findByDateBetween(request.getStartDate(), request.getEndDate());
         return satisfactions.stream()
@@ -116,7 +118,7 @@ public class SatisfactionService {
                                             .build()
                             )
                             .qualification(satisfaction.getQualification())
-                            .date(satisfaction.getDate())
+                            .date(satisfaction.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE))
                             .code(satisfaction.getCode())
                             .build();
                 })
@@ -127,11 +129,11 @@ public class SatisfactionService {
         Optional<SatisfactionDocument> satisfaction = null;
         if (!customerRepository.existsByEmail(request.getCustomer().getEmail())) {
             log.error("{SatisfactionService::update} code: " + request.getCustomer().getEmail());
-            throw new RuntimeException("Customer doesn't exists");
+            throw new SatisfactionValidationException("Customer doesn't exists");
         }
         if (!repository.existsByCode(request.getCode())) {
             log.error("{SatisfactionService::update} code: " + request.getCode());
-            throw new RuntimeException("Satisfaction doesn't exists");
+            throw new SatisfactionValidationException("Satisfaction doesn't exists");
         }
         satisfaction = repository.findByCode(request.getCode());
         satisfaction.get().setQualification(request.getQualification());

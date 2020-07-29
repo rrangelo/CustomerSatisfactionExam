@@ -37,38 +37,27 @@
  *
  * Contributor(s):
  */
-package rrangelo.customersatisfaction.documents;
+package rrangelo.customersatisfaction.exceptions.responses;
 
-import java.time.LocalDate;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  *
  * @author Ramon Rangel Osorio <ramon.rangel@protonmail.com>
  */
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
-@Builder
-@Document(collection = "satisfactions")
-public class SatisfactionDocument {
-    
-    @Id
-    private String id;
-    
-    @Indexed
-    private long code;
-    private int qualification;
-    private LocalDate date;
-        
-    @DBRef
-    private CustomerDocument customer;
-    
+public class SatisfactionResponseException extends ResponseStatusException {
+
+    public SatisfactionResponseException() {
+        super(HttpStatus.BAD_REQUEST);
+    }
+
+    public SatisfactionResponseException(String string) {
+        super(HttpStatus.BAD_REQUEST, string);
+    }
+
+    public SatisfactionResponseException(String string, Throwable thrwbl) {
+        super(HttpStatus.BAD_REQUEST, string, thrwbl);
+    }
+
 }

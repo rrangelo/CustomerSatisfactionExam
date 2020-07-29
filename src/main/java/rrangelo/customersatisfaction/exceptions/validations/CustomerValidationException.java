@@ -37,38 +37,28 @@
  *
  * Contributor(s):
  */
-package rrangelo.customersatisfaction.documents;
-
-import java.time.LocalDate;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
+package rrangelo.customersatisfaction.exceptions.validations;
 
 /**
  *
  * @author Ramon Rangel Osorio <ramon.rangel@protonmail.com>
  */
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
-@Builder
-@Document(collection = "satisfactions")
-public class SatisfactionDocument {
-    
-    @Id
-    private String id;
-    
-    @Indexed
-    private long code;
-    private int qualification;
-    private LocalDate date;
-        
-    @DBRef
-    private CustomerDocument customer;
-    
+public class CustomerValidationException extends RuntimeException {
+
+    public CustomerValidationException() {
+        super();
+    }
+
+    public CustomerValidationException(String string) {
+        super(string);
+    }
+
+    public CustomerValidationException(String string, Throwable thrwbl) {
+        super(string, thrwbl);
+    }
+
+    public CustomerValidationException(Throwable thrwbl) {
+        super(thrwbl);
+    }
+
 }

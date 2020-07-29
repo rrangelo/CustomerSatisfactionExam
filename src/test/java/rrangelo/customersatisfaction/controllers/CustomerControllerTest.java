@@ -37,38 +37,71 @@
  *
  * Contributor(s):
  */
-package rrangelo.customersatisfaction.documents;
+package rrangelo.customersatisfaction.controllers;
 
-import java.time.LocalDate;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.List;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import rrangelo.customersatisfaction.Application;
+import rrangelo.customersatisfaction.beans.responses.customers.CustomerFindCustomerResponseBean;
+import rrangelo.customersatisfaction.repositories.CustomerRepository;
+import rrangelo.customersatisfaction.repositories.SatisfactionRepository;
+import rrangelo.customersatisfaction.services.*;
 
 /**
  *
  * @author Ramon Rangel Osorio <ramon.rangel@protonmail.com>
  */
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
-@Builder
-@Document(collection = "satisfactions")
-public class SatisfactionDocument {
-    
-    @Id
-    private String id;
-    
-    @Indexed
-    private long code;
-    private int qualification;
-    private LocalDate date;
+@Slf4j
+@SpringBootTest(classes = {Application.class})
+public class CustomerControllerTest {
+
+    List<CustomerFindCustomerResponseBean> documents;
+
+    @Autowired
+    private CustomerService service;
+
+    @Autowired
+    private CustomerRepository repository;
+
+    @Autowired
+    private SatisfactionRepository satisfactionRepository;
+
+    @BeforeEach
+    public void setUp() {
+    }
+
+    @AfterEach
+    public void tearDown() {
+    }
+
+    /**
+     * Successfully test of create method, of class CustomerService.
+     */
+    @Test
+    public void testCreateSuccess() {
+        System.out.println("create");
+    }
+
+    /**
+     * Test of find method, of class CustomerService.
+     */
+    @Test
+    public void testFindSuccess() {
+        System.out.println("find");
+    }
+
+    /**
+     * Test of update method, of class CustomerService.
+     */
+    @Test
+    public void testUpdate() {
+        System.out.println("update");
         
-    @DBRef
-    private CustomerDocument customer;
-    
+    }
+
 }

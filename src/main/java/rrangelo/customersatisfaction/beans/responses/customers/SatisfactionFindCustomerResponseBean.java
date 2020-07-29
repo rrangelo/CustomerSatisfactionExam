@@ -39,7 +39,6 @@
  */
 package rrangelo.customersatisfaction.beans.responses.customers;
 
-import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -56,6 +55,6 @@ import lombok.NoArgsConstructor;
 public class SatisfactionFindCustomerResponseBean {
     
     private long code;
-    private LocalDate date;
+    private String date;
     private int qualification;
 }

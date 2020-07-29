@@ -43,7 +43,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 import rrangelo.customersatisfaction.documents.SatisfactionDocument;
 
 /**
@@ -58,7 +57,6 @@ public interface SatisfactionRepository extends MongoRepository<SatisfactionDocu
     
     Optional<SatisfactionDocument> findByCode(long code);
     
-    @Query(value = "{'customer_id': ?0}", fields = "{'customer_id' : 0}")
     List<SatisfactionDocument> findAllByCustomer(String customerId);
     
     List<SatisfactionDocument> findByDateBetween(LocalDate startDate, LocalDate endDate);

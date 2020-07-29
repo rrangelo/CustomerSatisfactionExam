@@ -44,8 +44,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,6 +54,7 @@ import rrangelo.customersatisfaction.beans.requests.satisfactions.SatisfactionCr
 import rrangelo.customersatisfaction.beans.requests.satisfactions.SatisfactionFindSatisfactionRequestBean;
 import rrangelo.customersatisfaction.beans.requests.satisfactions.SatisfactionUpdateSatisfactionRequestBean;
 import rrangelo.customersatisfaction.beans.responses.satisfactions.SatisfactionFindSatisfactionResponseBean;
+import rrangelo.customersatisfaction.exceptions.responses.SatisfactionResponseException;
 import rrangelo.customersatisfaction.services.SatisfactionService;
 
 /**
@@ -69,7 +70,11 @@ public class SatisfactionController {
 
     @PostMapping
     public void create(@RequestBody SatisfactionCreateSatisfactionRequestBean request) {
-        service.create(request);
+        try {
+            service.create(request);
+        } catch (Exception e) {
+            throw new SatisfactionResponseException(e.getMessage());
+        }
     }
 
     @GetMapping
@@ -77,17 +82,25 @@ public class SatisfactionController {
             @RequestParam(value = "start") String startDate,
             @RequestParam(value = "end") String endDate
     ) {
-        return service.find(
-                SatisfactionFindSatisfactionRequestBean.builder()
-                        .startDate(LocalDate.parse(startDate, DateTimeFormatter.ofPattern("dd//MM//yyyy")))
-                        .endDate(LocalDate.parse(endDate, DateTimeFormatter.ofPattern("dd//MM//yyyy")))
-                        .build()
-        );
+        try {
+            return service.find(
+                    SatisfactionFindSatisfactionRequestBean.builder()
+                            .startDate(LocalDate.parse(startDate, DateTimeFormatter.ofPattern("dd/MM/yyyy")))
+                            .endDate(LocalDate.parse(endDate, DateTimeFormatter.ofPattern("dd/MM/yyyy")))
+                            .build()
+            );
+        } catch (Exception e) {
+            throw new SatisfactionResponseException(e.getMessage());
+        }
     }
 
-    @PatchMapping
+    @PutMapping
     public void update(@RequestBody SatisfactionUpdateSatisfactionRequestBean request) {
-        service.update(request);
+        try {
+            service.update(request);
+        } catch (Exception e) {
+            throw new SatisfactionResponseException(e.getMessage());
+        }
     }
 
 }

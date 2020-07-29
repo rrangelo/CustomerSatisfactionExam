@@ -65,6 +65,6 @@ public class SatisfactionUpdateSatisfactionRequestBean {
     @Max(value = 10, message = "Qualification should be equal to or lesser than 10")
     private int qualification;
     
-    private CustomerUpateSatisfactionRequestBean customer;
+    private CustomerUpdateSatisfactionRequestBean customer;
     
 }

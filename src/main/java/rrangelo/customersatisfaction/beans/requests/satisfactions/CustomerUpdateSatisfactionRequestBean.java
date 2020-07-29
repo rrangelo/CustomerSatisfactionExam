@@ -37,17 +37,14 @@
  *
  * Contributor(s):
  */
-package rrangelo.customersatisfaction.documents;
+package rrangelo.customersatisfaction.beans.requests.satisfactions;
 
-import java.time.LocalDate;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  *
@@ -57,18 +54,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @Data
 @Builder
-@Document(collection = "satisfactions")
-public class SatisfactionDocument {
+public class CustomerUpdateSatisfactionRequestBean {
     
-    @Id
-    private String id;
-    
-    @Indexed
-    private long code;
-    private int qualification;
-    private LocalDate date;
-        
-    @DBRef
-    private CustomerDocument customer;
+    @NotNull(message = "Please provide an email")
+    @Email(message = "Please provide a valid email address")
+    private String email;
     
 }
