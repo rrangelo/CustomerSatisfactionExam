@@ -26,9 +26,21 @@ After you need execute this command:
 `docker run -p 8080:8080 -t rrangelo/customersatisfaction`
 
 ## Documentation
+
+There are 6 endpoints to manage the resources.
+
+* Customer: /customer
+  * Post: 
+  * Get: 
+  * Patch: 
+* Satisfaction: /satisfaction
+  * Post: 
+  * Get: 
+  * Patch: 
+
 First that all, you need build and run the project.
 
-Go to [http://localhost:8080/swagger-ui](http://localhost:8080/swagger-ui) to see the technical documentation.
+Further information go to [http://localhost:8080/swagger-ui](http://localhost:8080/swagger-ui) to see the technical documentation.
 
 ### Reference Documentation
 For further reference, please consider the following sections:

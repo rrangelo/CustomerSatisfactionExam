@@ -56,7 +56,6 @@ import lombok.NoArgsConstructor;
 public class SatisfactionFindCustomerResponseBean {
     
     private long code;
-    private long codeCustomer;
     private LocalDate date;
     private int qualification;
 }

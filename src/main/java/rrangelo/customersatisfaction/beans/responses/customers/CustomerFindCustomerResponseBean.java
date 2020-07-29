@@ -55,7 +55,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CustomerFindCustomerResponseBean {
     
-    private long code;
     private String email;
     private String names;
     private List<SatisfactionFindCustomerResponseBean> satisfactions;

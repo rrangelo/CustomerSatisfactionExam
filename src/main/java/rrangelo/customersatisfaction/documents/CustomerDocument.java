@@ -37,13 +37,15 @@
  *
  * Contributor(s):
  */
-package rrangelo.customersatisfaction.entities;
+package rrangelo.customersatisfaction.documents;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.mongodb.core.mapping.DBRef;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
@@ -51,20 +53,21 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
  *
  * @author Ramon Rangel Osorio <ramon.rangel@protonmail.com>
  */
+@NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
 @Document(collection = "customers")
-public class CustomerEntity {
+public class CustomerDocument {
     
     @MongoId
     private String id;
     
-    private Long code;
+    @Indexed
     private String email;
     private String names;
     
-    @DBRef(lazy = true)
-    private List<SatisfactionEntity> satisfactions;
+    @Transient
+    private List<SatisfactionDocument> satisfactions;
 
 }

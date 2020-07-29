@@ -41,22 +41,20 @@ package rrangelo.customersatisfaction.repositories;
 
 
 import java.util.Optional;
-import org.springframework.data.repository.CrudRepository;
-import rrangelo.customersatisfaction.entities.CustomerEntity;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
+import rrangelo.customersatisfaction.documents.CustomerDocument;
 
 /**
  *
  * @author Ramon Rangel Osorio <ramon.rangel@protonmail.com>
  */
+@Repository
 public interface CustomerRepository 
-        extends CrudRepository<CustomerEntity, String> {
+        extends MongoRepository<CustomerDocument, String> {
     
     boolean existsByEmail(String email);
     
-    boolean existsByCode(long code);
-    
-    Optional<CustomerEntity> findByEmail(String email);
-    
-    Optional<CustomerEntity> findByCode(long code);
+    Optional<CustomerDocument> findByEmail(String email);
     
 }

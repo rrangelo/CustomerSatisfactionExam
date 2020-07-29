@@ -37,12 +37,14 @@
  *
  * Contributor(s):
  */
-package rrangelo.customersatisfaction.entities;
+package rrangelo.customersatisfaction.documents;
 
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
@@ -50,18 +52,21 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
  *
  * @author Ramon Rangel Osorio <ramon.rangel@protonmail.com>
  */
+@NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
 @Document(collection = "satisfactions")
-public class SatisfactionEntity {
+public class SatisfactionDocument {
     
     @MongoId
     private String id;
-    
+        
     private long code;
-    private long codeCustomer;
     private int qualification;
     private LocalDate date;
+        
+    @DBRef
+    private CustomerDocument customer;
     
 }

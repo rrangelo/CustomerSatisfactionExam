@@ -40,6 +40,7 @@
 package rrangelo.customersatisfaction.beans.requests.customers;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -55,6 +56,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CustomerFindCustomerRequestBean {
     
+    @NotNull
     @Email(message = "Please provide a valid email address")
     private String email;
     

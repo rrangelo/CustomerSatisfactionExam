@@ -43,18 +43,24 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import rrangelo.customersatisfaction.entities.SatisfactionEntity;
+import org.springframework.data.mongodb.repository.Query;
+import rrangelo.customersatisfaction.documents.SatisfactionDocument;
 
 /**
  *
  * @author Ramon Rangel Osorio <ramon.rangel@protonmail.com>
  */
-public interface SatisfactionRepository extends MongoRepository<SatisfactionEntity, String> {
+public interface SatisfactionRepository extends MongoRepository<SatisfactionDocument, String> {
 
     boolean existsByCode(long code);
     
-    Optional<SatisfactionEntity> findByCode(long code);
+    boolean existsByCustomer(String customerId);
     
-    List<SatisfactionEntity> findByDateBetween(LocalDate startDate, LocalDate endDate);
+    Optional<SatisfactionDocument> findByCode(long code);
+    
+    @Query(value = "{'customer_id': ?0}", fields = "{'customer_id' : 0}")
+    List<SatisfactionDocument> findAllByCustomer(String customerId);
+    
+    List<SatisfactionDocument> findByDateBetween(LocalDate startDate, LocalDate endDate);
     
 }

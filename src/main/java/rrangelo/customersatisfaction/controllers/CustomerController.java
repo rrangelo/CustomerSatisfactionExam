@@ -41,11 +41,11 @@ package rrangelo.customersatisfaction.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import rrangelo.customersatisfaction.beans.requests.customers.CustomerCreateCustomerRequestBean;
 import rrangelo.customersatisfaction.beans.requests.customers.CustomerFindCustomerRequestBean;
@@ -69,15 +69,15 @@ public class CustomerController {
         service.create(customer);
     }
     
-    @GetMapping(value = "/{email}")
-    public CustomerFindCustomerResponseBean find(@PathVariable("email") String email) {
+    @GetMapping
+    public CustomerFindCustomerResponseBean find(@RequestParam(value = "email") String email) {
         return service.find(CustomerFindCustomerRequestBean.builder()
                         .email(email)
                         .build()
         );
     }
     
-    @PatchMapping
+    @PutMapping
     public void update(@RequestBody CustomerUpdateCustomerRequestBean customer) {
         service.update(customer);
     }

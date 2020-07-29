@@ -41,8 +41,6 @@ package rrangelo.customersatisfaction.services;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
@@ -54,8 +52,8 @@ import rrangelo.customersatisfaction.beans.requests.customers.CustomerFindCustom
 import rrangelo.customersatisfaction.beans.requests.customers.CustomerUpdateCustomerRequestBean;
 import rrangelo.customersatisfaction.beans.responses.customers.CustomerFindCustomerResponseBean;
 import rrangelo.customersatisfaction.beans.responses.customers.SatisfactionFindCustomerResponseBean;
-import rrangelo.customersatisfaction.entities.CustomerEntity;
-import rrangelo.customersatisfaction.entities.SatisfactionEntity;
+import rrangelo.customersatisfaction.documents.CustomerDocument;
+import rrangelo.customersatisfaction.documents.SatisfactionDocument;
 import rrangelo.customersatisfaction.repositories.CustomerRepository;
 import rrangelo.customersatisfaction.repositories.SatisfactionRepository;
 
@@ -79,69 +77,58 @@ public class CustomerService {
 
     public void create(CustomerCreateCustomerRequestBean request) {
         if (repository.existsByEmail(request.getEmail())) {
-            log.error("{CustomerService::create}");
+            log.error("{CustomerService::create} email: " + request.getEmail());
             throw new RuntimeException("Customer exists");
         }
-        final CustomerEntity customer = repository.save(
-                CustomerEntity.builder()
-                        .code(System.currentTimeMillis())
+        final CustomerDocument customer = repository.save(
+                CustomerDocument.builder()
                         .email(request.getEmail())
                         .names(request.getNames())
+                        .satisfactions(new ArrayList<>())
                         .build()
         );
         if (CollectionUtils.isEmpty(request.getSatisfactions())) {
             return;
         }
-        customer.setSatisfactions(
-                request.getSatisfactions().stream()
-                        .map(satisfaction -> {
-                            return satisfactionRepository.save(
-                                    SatisfactionEntity.builder()
-                                            .date(LocalDate.now())
-                                            .code(System.currentTimeMillis())
-                                            .codeCustomer(customer.getCode())
-                                            .qualification(satisfaction.getQualification())
-                                            .build()
-                            );
-                        })
-                        .collect(Collectors.toList())
-        );
-        repository.save(customer);
+        request.getSatisfactions().stream()
+                .forEach(satisfaction -> {
+                    satisfactionRepository.save(SatisfactionDocument.builder()
+                            .date(LocalDate.now())
+                            .code(System.currentTimeMillis())
+                            .customer(customer)
+                            .qualification(satisfaction.getQualification())
+                            .build()
+                    );
+                });
     }
 
     public CustomerFindCustomerResponseBean find(CustomerFindCustomerRequestBean request) {
-        CustomerFindCustomerResponseBean response = null;
-        Optional<CustomerEntity> customer = null;
+        Optional<CustomerDocument> customer = null;
         if (!repository.existsByEmail(request.getEmail())) {
             log.error("{CustomerService::find} email: " + request.getEmail());
             throw new RuntimeException("Customer doesn't exists");
         }
         customer = repository.findByEmail(request.getEmail());
-        response = CustomerFindCustomerResponseBean.builder()
-                .code(customer.get().getCode())
+        return CustomerFindCustomerResponseBean.builder()
                 .email(customer.get().getEmail())
                 .names(customer.get().getNames())
-                .satisfactions(new ArrayList<>())
+                .satisfactions(
+                        satisfactionRepository.existsByCustomer(customer.get().getId())
+                        ? satisfactionRepository.findAllByCustomer(customer.get().getId()).stream()
+                                .map(satisfaction -> {
+                                    return SatisfactionFindCustomerResponseBean.builder()
+                                            .qualification(satisfaction.getQualification())
+                                            .date(satisfaction.getDate())
+                                            .code(satisfaction.getCode())
+                                            .build();
+                                }).collect(Collectors.toList())
+                        : new ArrayList<>()
+                )
                 .build();
-        if (CollectionUtils.isEmpty(customer.get().getSatisfactions())) {
-            return response;
-        }
-        response.setSatisfactions(customer.get().getSatisfactions().stream()
-                        .map(satisfaction -> {
-                            return SatisfactionFindCustomerResponseBean.builder()
-                                    .date(LocalDate.now())
-                                    .code(satisfaction.getCode())
-                                    .codeCustomer(satisfaction.getCodeCustomer())
-                                    .qualification(satisfaction.getQualification())
-                                    .build();
-                        })
-                        .collect(Collectors.toList())
-        );
-        return response;
     }
 
     public void update(CustomerUpdateCustomerRequestBean request) {
-        Optional<CustomerEntity> customer = null;
+        Optional<CustomerDocument> customer = null;
         if (!repository.existsByEmail(request.getEmail())) {
             log.error("{CustomerService::update} email: " + request.getEmail());
             throw new RuntimeException("Customer doesn't exists");
@@ -149,41 +136,6 @@ public class CustomerService {
         customer = repository.findByEmail(request.getEmail());
         customer.get().setEmail(request.getEmail());
         customer.get().setNames(request.getNames());
-        customer.get().setSatisfactions(
-                request.getSatisfactions().stream()
-                        .map(satisfaction -> {
-                            final List<SatisfactionEntity> satisfactions = repository.findByEmail(request.getEmail()).get().getSatisfactions();
-                            SatisfactionEntity satisfact = null;
-                            List<SatisfactionEntity> satisfacts = null;
-                            satisfact = SatisfactionEntity.builder()
-                                    .code(satisfaction.getCode())
-                                    .date(satisfaction.getDate())
-                                    .qualification(satisfaction.getQualification())
-                                    .build();
-                            satisfacts = new ArrayList<>();
-                            for (SatisfactionEntity satis : satisfactions) {
-                                if (Objects.equals(satisfact.getCode(), satis.getCode())
-                                        && !Objects.equals(satisfact.getQualification(), satis.getQualification())) {
-                                    satisfact.setQualification(satis.getQualification());
-                                }
-                            }
-                            satisfaction.setDate(LocalDate.now());
-                            return satisfact;
-                        })
-                        .collect(Collectors.toList())
-        );
-        customer.get().getSatisfactions().addAll(
-                request.getSatisfactions().stream()
-                        .filter(satisfaction -> !satisfactionRepository.existsByCode(satisfaction.getCode()))
-                        .map(satisfaction -> {
-                            return SatisfactionEntity.builder()
-                                    .code(satisfaction.getCode())
-                                    .date(satisfaction.getDate())
-                                    .qualification(satisfaction.getQualification())
-                                    .build();
-                        })
-                        .collect(Collectors.toList())
-        );
         repository.save(customer.get());
     }
 

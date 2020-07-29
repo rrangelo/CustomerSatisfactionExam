@@ -64,7 +64,6 @@ public class CustomerUpdateCustomerRequestBean {
     @NotNull(message = "Please provide a name")
     private String names;
     
-    @NotNull
     private List<SatisfactionUpdateCustomerRequestBean> satisfactions;
     
 }

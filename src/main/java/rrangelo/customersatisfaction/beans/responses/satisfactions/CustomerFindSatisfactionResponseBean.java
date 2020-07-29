@@ -56,6 +56,5 @@ public class CustomerFindSatisfactionResponseBean {
     
     private String email;
     private String names;
-    private long code;
     
 }
