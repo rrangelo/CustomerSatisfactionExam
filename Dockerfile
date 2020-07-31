@@ -35,11 +35,9 @@
 # made subject to such option by the copyright holder.
 #
 # Contributor(s): Ramon Rangel Osorio <ramon.rangel@protonmail.com>
-from openjdk:8-jdk-alpine
+from openjdk:8u265-slim
 
 maintainer Ramon Rangel Osorio ramon.rangel@protonmail.com
-
-run 
 
 arg JAR_FILE=target/*.jar
 
