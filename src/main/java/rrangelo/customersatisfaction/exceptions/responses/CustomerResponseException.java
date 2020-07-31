@@ -48,16 +48,8 @@ import org.springframework.web.server.ResponseStatusException;
  */
 public class CustomerResponseException extends ResponseStatusException {
 
-    public CustomerResponseException() {
-        super(HttpStatus.BAD_REQUEST);
-    }
-
     public CustomerResponseException(String string) {
         super(HttpStatus.BAD_REQUEST, string);
-    }
-
-    public CustomerResponseException(String string, Throwable thrwbl) {
-        super(HttpStatus.BAD_REQUEST, string, thrwbl);
     }
 
 }

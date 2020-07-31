@@ -39,7 +39,6 @@
  */
 package rrangelo.customersatisfaction.beans.requests.customers;
 
-import java.util.List;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -63,7 +62,5 @@ public class CustomerUpdateCustomerRequestBean {
     
     @NotNull(message = "Please provide a name")
     private String names;
-    
-    private List<SatisfactionUpdateCustomerRequestBean> satisfactions;
     
 }

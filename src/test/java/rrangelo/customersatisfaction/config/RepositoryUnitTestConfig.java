@@ -37,34 +37,15 @@
  *
  * Contributor(s):
  */
-package rrangelo.customersatisfaction.beans.requests.customers;
+package rrangelo.customersatisfaction.config;
 
-import java.time.LocalDate;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 
 /**
  *
  * @author Ramon Rangel Osorio <ramon.rangel@protonmail.com>
  */
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
-@Builder
-public class SatisfactionUpdateCustomerRequestBean {
-    
-    private long code;
-    
-    private LocalDate date;
-    
-    @NotNull(message = "Please provide a qualification")
-    @Min(value = 1, message = "Qualification should be equal to or greater than 1")
-    @Max(value = 10, message = "Qualification should be equal to or lesser than 10")
-    private int qualification;
-    
+@DataMongoTest
+public abstract class RepositoryUnitTestConfig extends UnitTestConfig {
+
 }

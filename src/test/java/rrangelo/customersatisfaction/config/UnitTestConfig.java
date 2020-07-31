@@ -37,27 +37,15 @@
  *
  * Contributor(s):
  */
-package rrangelo.customersatisfaction.beans.requests.satisfactions;
+package rrangelo.customersatisfaction.config;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.springframework.test.context.ActiveProfiles;
 
 /**
  *
  * @author Ramon Rangel Osorio <ramon.rangel@protonmail.com>
  */
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
-@Builder
-public class CustomerUpateSatisfactionRequestBean {
-    
-    @NotNull(message = "Please provide a code")
-    @Email(message = "Please provide a valid email address")
-    private String email;
+@ActiveProfiles("ut")
+public abstract class UnitTestConfig extends TestConfig {
     
 }

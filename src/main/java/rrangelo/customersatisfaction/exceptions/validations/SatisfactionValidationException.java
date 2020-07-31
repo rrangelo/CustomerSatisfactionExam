@@ -45,20 +45,8 @@ package rrangelo.customersatisfaction.exceptions.validations;
  */
 public class SatisfactionValidationException extends RuntimeException {
 
-    public SatisfactionValidationException() {
-        super();
-    }
-
     public SatisfactionValidationException(String string) {
         super(string);
-    }
-
-    public SatisfactionValidationException(String string, Throwable thrwbl) {
-        super(string, thrwbl);
-    }
-
-    public SatisfactionValidationException(Throwable thrwbl) {
-        super(thrwbl);
     }
 
 }

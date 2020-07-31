@@ -100,7 +100,7 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
-<!--            <plugin>
+            <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.5</version>
@@ -126,12 +126,11 @@
                         <configuration>
                             <rules>
                                 <rule>
-                                    <element>PACKAGE</element>
                                     <limits>
                                         <limit>
                                             <counter>LINE</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.01</minimum>
+                                            <minimum>0.90</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
@@ -139,7 +138,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>-->
+            </plugin>
         </plugins>
     </build>
 

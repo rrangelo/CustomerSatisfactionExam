@@ -34,10 +34,19 @@
 # Version 2 license, then the option applies only if the new code is
 # made subject to such option by the copyright holder.
 #
-# Contributor(s):
-FROM openjdk:8-jdk-alpine
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+# Contributor(s): Ramon Rangel Osorio <ramon.rangel@protonmail.com>
+from openjdk:8-jdk-alpine
+
+maintainer Ramon Rangel Osorio ramon.rangel@protonmail.com
+
+run 
+
+arg JAR_FILE=target/*.jar
+
+copy ${JAR_FILE} app.jar
+
+expose 8080
+
+entrypoint ["java","-jar","/app.jar"]
 
 CMD ["/bin/sh"]

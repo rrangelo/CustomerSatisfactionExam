@@ -37,16 +37,19 @@
  *
  * Contributor(s):
  */
-package rrangelo.customersatisfaction.exceptions.validations;
+package rrangelo.customersatisfaction.config;
+
+import org.springframework.boot.test.context.SpringBootTest;
+import rrangelo.customersatisfaction.Application;
 
 /**
  *
  * @author Ramon Rangel Osorio <ramon.rangel@protonmail.com>
  */
-public class CustomerValidationException extends RuntimeException {
-
-    public CustomerValidationException(String string) {
-        super(string);
-    }
+@SpringBootTest(
+        webEnvironment = SpringBootTest.WebEnvironment.MOCK,
+        classes = Application.class
+)
+public abstract class ServiceUnitTestConfig extends UnitTestConfig {
 
 }

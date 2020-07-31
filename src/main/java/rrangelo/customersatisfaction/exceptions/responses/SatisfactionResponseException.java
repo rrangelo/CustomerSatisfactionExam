@@ -48,16 +48,8 @@ import org.springframework.web.server.ResponseStatusException;
  */
 public class SatisfactionResponseException extends ResponseStatusException {
 
-    public SatisfactionResponseException() {
-        super(HttpStatus.BAD_REQUEST);
-    }
-
     public SatisfactionResponseException(String string) {
         super(HttpStatus.BAD_REQUEST, string);
-    }
-
-    public SatisfactionResponseException(String string, Throwable thrwbl) {
-        super(HttpStatus.BAD_REQUEST, string, thrwbl);
     }
 
 }

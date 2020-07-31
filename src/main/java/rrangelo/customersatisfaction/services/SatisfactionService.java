@@ -77,14 +77,13 @@ public class SatisfactionService {
     }
 
     public void create(SatisfactionCreateSatisfactionRequestBean request) {
-        SatisfactionDocument satisfaction = null;
         Optional<CustomerDocument> customer = null;
         if (!customerRepository.existsByEmail(request.getCustomer().getEmail())) {
             log.error("{SatisfactionService::create} email: " + request.getCustomer().getEmail());
             throw new SatisfactionValidationException("Customer doesn't exists");
         }
         customer = customerRepository.findByEmail(request.getCustomer().getEmail());
-        satisfaction = repository.save(
+        repository.save(
                 SatisfactionDocument.builder()
                         .date(LocalDate.now())
                         .code(System.currentTimeMillis())
@@ -92,22 +91,15 @@ public class SatisfactionService {
                         .qualification(request.getQualification())
                         .build()
         );
-        if (!repository.existsByCode(satisfaction.getCode())) {
-            log.error("{SatisfactionService::create} code: " + satisfaction.getCode());
-            throw new SatisfactionValidationException("Satisfaction can't be created");
-        }
     }
 
     public List<SatisfactionFindSatisfactionResponseBean> find(SatisfactionFindSatisfactionRequestBean request) {
         List<SatisfactionDocument> satisfactions = null;
-        if (
-                request.getStartDate().isAfter(request.getEndDate())
-                || request.getStartDate().isEqual(request.getEndDate())
-        ) {
+        if (request.getStartDate().isAfter(request.getEndDate())) {
             log.error("{SatisfactionService::find} startDate: " + request.getStartDate() + " - endDate: " + request.getEndDate());
             throw new SatisfactionValidationException("Dates aren't a period");
         }
-        satisfactions = repository.findByDateBetween(request.getStartDate(), request.getEndDate());
+        satisfactions = repository.findByDateBetween(request.getStartDate(), request.getEndDate().plusDays(1));
         return satisfactions.stream()
                 .map(satisfaction -> {
                     return SatisfactionFindSatisfactionResponseBean.builder()
@@ -128,7 +120,7 @@ public class SatisfactionService {
     public void update(SatisfactionUpdateSatisfactionRequestBean request) {
         Optional<SatisfactionDocument> satisfaction = null;
         if (!customerRepository.existsByEmail(request.getCustomer().getEmail())) {
-            log.error("{SatisfactionService::update} code: " + request.getCustomer().getEmail());
+            log.error("{SatisfactionService::update} email: " + request.getCustomer().getEmail());
             throw new SatisfactionValidationException("Customer doesn't exists");
         }
         if (!repository.existsByCode(request.getCode())) {

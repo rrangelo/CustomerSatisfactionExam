@@ -37,16 +37,28 @@
  *
  * Contributor(s):
  */
-package rrangelo.customersatisfaction.exceptions.validations;
+package rrangelo.customersatisfaction.config;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.servlet.MockMvc;
+import rrangelo.customersatisfaction.Application;
 
 /**
  *
  * @author Ramon Rangel Osorio <ramon.rangel@protonmail.com>
  */
-public class CustomerValidationException extends RuntimeException {
-
-    public CustomerValidationException(String string) {
-        super(string);
-    }
+@ActiveProfiles("it")
+@SpringBootTest(
+        webEnvironment = SpringBootTest.WebEnvironment.MOCK,
+        classes = Application.class
+)
+@AutoConfigureMockMvc
+public abstract class IntegrationTestConfig extends TestConfig {
+    
+    @Autowired
+    public MockMvc mvc;
 
 }

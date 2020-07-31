@@ -37,16 +37,16 @@
  *
  * Contributor(s):
  */
-package rrangelo.customersatisfaction.exceptions.validations;
+package rrangelo.customersatisfaction.config;
+
+import org.junit.runner.RunWith;
+import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  *
  * @author Ramon Rangel Osorio <ramon.rangel@protonmail.com>
  */
-public class CustomerValidationException extends RuntimeException {
-
-    public CustomerValidationException(String string) {
-        super(string);
-    }
-
+@RunWith(SpringRunner.class)
+public abstract class TestConfig {
+    
 }

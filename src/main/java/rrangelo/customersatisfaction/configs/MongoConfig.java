@@ -41,6 +41,7 @@ package rrangelo.customersatisfaction.configs;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
@@ -55,9 +56,12 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories(basePackages = "rrangelo.customersatisfaction.repositories")
 public class MongoConfig {
 
+    @Value("${spring.data.mongodb.uri}")
+    private String mongoDb;
+    
     @Bean
     public MongoClient mongo() {
-        return MongoClients.create("mongodb+srv://exam:Exam7532@exams.4xyrd.mongodb.net/customer_satisfaction");
+        return MongoClients.create(mongoDb);
     }
 
     @Bean
