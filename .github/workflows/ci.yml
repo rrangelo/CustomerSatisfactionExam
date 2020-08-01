@@ -41,9 +41,6 @@ on:
   push:
     branches: 
       - master
-  pull_request:
-    branches: 
-      - master
 
 jobs:
   ci:
@@ -56,15 +53,11 @@ jobs:
         uses: actions/setup-java@v1.4.0
         with:
           java-version: 1.8
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Print
-        run: echo ${{ secrets.GITHUB_TOKEN }}
       - name: Clean project
         run: mvn clean
       - name: Package tested project
         run: mvn package
       - name: Verify coverage
-        run: mvn verify sonar:sonar -D sonar.login=${{ secrets.SONAR_TOKEN }}
+        run: mvn verify sonar:sonar -D sonar.login=${{ secrets.SONAR_TOKEN }} -D GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
       - name: Publish release project
         run: mvn deploy
