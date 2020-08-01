@@ -58,9 +58,8 @@ jobs:
           java-version: 1.8
       - name: Setup SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v1.3
-        wuth:
-          env:
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       - name: Package tested project
         run: ./mvnw package
       - name: Verify coverage
