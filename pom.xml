@@ -17,6 +17,9 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <sonar.projectKey>rrangelo_CustomerSatisfactionExam</sonar.projectKey>
+        <sonar.organization>rrangelo</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
     <dependencies>
@@ -98,6 +101,14 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.7.0.1746</version>
+                <configuration>
+                    <goalPrefix>sonar</goalPrefix>
                 </configuration>
             </plugin>
             <plugin>
