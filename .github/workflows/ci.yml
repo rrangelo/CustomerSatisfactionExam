@@ -56,15 +56,15 @@ jobs:
         uses: actions/setup-java@v1.4.0
         with:
           java-version: 1.8
-#      - name: Setup SonarCloud Scan
-#        uses: SonarSource/sonarcloud-github-action@v1.3
-#        env:
-#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Clean project
+        run: mvn clean
       - name: Package tested project
-        run: ./mvnw package
+        run: mvn package
       - name: Verify coverage
-        run: ./mvnw verify sonar:sonar
-      - name: Execute Unit Testing
-        run: ./mvnw test -D spring.profiles.active=ut
+        run: mvn verify sonar:sonar -D sonar.login=${{ SONAR_TOKEN }}
+      - name: Execute Unit Testings
+        run: mvn test -D spring.profiles.active=ut
       - name: Execute Integration Testing
-        run: ./mvnw test -D spring.profiles.active=it
+        run: mvn test -D spring.profiles.active=it
+      - name: Publish release project
+        run: mvn deploy

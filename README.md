@@ -12,6 +12,12 @@ Clone the repository to your local file system, go into the project location and
 
 And now go to Documentation section to see the API Docs on the web. 
 
+## Test and verify
+
+To see the coverage go to:
+
+https://sonarcloud.io/dashboard?id=rrangelo_CustomerSatisfactionExam
+
 ## Instalation
 
 To running on Docker
