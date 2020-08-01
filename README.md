@@ -5,22 +5,22 @@ This is an exam for apply to PageConsulting as Senior Backend Developer.
 Clone the repository to your local file system, go into the project location and execute the sentence below.
 
 ### On Unix:
-`./mvnw package && java -jar target/customersatisfaction-0.0.1-SNAPSHOT.jar`
+`./mvnw clean package && java -jar target/customersatisfaction-0.0.1-SNAPSHOT.jar`
 
 ### On Windows:
-`mvnw package && java -jar target/customersatisfaction-0.0.1-SNAPSHOT.jar`
+`mvnw clean package && java -jar target/customersatisfaction-0.0.1-SNAPSHOT.jar`
 
 And now go to Documentation section to see the API Docs on the web. 
 
 ## Instalation
 
-To install on Docker
+To running on Docker
 
 ### On Unix
-`./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=rrangelo/customersatisfaction`
+`./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=rrangelo/customer_satisfaction`
 
 ### On Windows
-`mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=rrangelo/customersatisfaction`
+`mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=rrangelo/customer_satisfaction`
 
 After you need execute this command:
 `docker run -p 8080:8080 -t rrangelo/customersatisfaction`
