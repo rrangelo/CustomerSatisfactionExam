@@ -61,5 +61,5 @@ jobs:
         run: mvn verify sonar:sonar -D sonar.login=${{ secrets.SONAR_TOKEN }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Publish release project
-        run: mvn deploy
+#      - name: Publish release project
+#        run: mvn deploy
