@@ -61,7 +61,7 @@ jobs:
       - name: Package tested project
         run: mvn package
       - name: Verify coverage
-        run: mvn verify sonar:sonar -D sonar.login=${{ SONAR_TOKEN }}
+        run: mvn verify sonar:sonar -D sonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Execute Unit Testings
         run: mvn test -D spring.profiles.active=ut
       - name: Execute Integration Testing
