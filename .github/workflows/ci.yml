@@ -56,10 +56,10 @@ jobs:
         uses: actions/setup-java@v1.4.0
         with:
           java-version: 1.8
-      - name: Setup SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@v1.3
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#      - name: Setup SonarCloud Scan
+#        uses: SonarSource/sonarcloud-github-action@v1.3
+#        env:
+#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       - name: Package tested project
         run: ./mvnw package
       - name: Verify coverage
