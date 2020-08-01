@@ -58,8 +58,9 @@ jobs:
           java-version: 1.8
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Clean project
+      - name: Print
         run: echo ${{ secrets.GITHUB_TOKEN }}
+      - name: Clean project
         run: mvn clean
       - name: Package tested project
         run: mvn package
