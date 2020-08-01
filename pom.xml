@@ -20,6 +20,7 @@
         <sonar.projectKey>rrangelo_CustomerSatisfactionExam</sonar.projectKey>
         <sonar.organization>rrangelo</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <GITHUB_TOKEN>${env.GITHUB_TOKEN}</GITHUB_TOKEN>
     </properties>
 
     <dependencies>
